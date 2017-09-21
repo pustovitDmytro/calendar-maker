@@ -4,7 +4,7 @@ import re
 import os
 from json import JSONEncoder
 import csv
-from datetime import date
+from datetime import date,datetime
 
 class Page():
 	__metaclass__ = ABCMeta
@@ -29,13 +29,27 @@ class Page():
 		if self.now>date(self.now.year,month,day):
 			return self.now.year
 		return self.now.year+1
-
+	def get_date(self,strdate):
+		date =  datetime.strptime(strdate,'%d.%m');
+		print(date);
+		return date;
 	def _read_csv(self):
-		pass
+		with open(self.link) as csvfile:
+			reader = csv.DictReader(csvfile,delimiter =";")
+			self.events = []
+			for row in reader:
+				print(row);
+				record = {
+				'name': row['name']+"'s birthday",
+				'date': self.get_date(row['date'])
+				}
+				self.events.append(record)
+		print(self.events)
+
 	def _write_csv(self):
-		with open(self, 'w',newline='') as csvfile:
+		with open(self, 'w') as csvfile:
 			fieldnames = ['Subject','Start Date','All Day Event','Private']
-			writer = csv.DictWriter(csvfile, fieldnames=fieldnames,delimiter =",")
+			writer = csv.DictWriter(csvfile, fieldnames=fieldnames,delimiter =",",newline='')
 			writer.writeheader()
 			for event in self.data:
 				record = {

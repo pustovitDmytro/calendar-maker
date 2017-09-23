@@ -57,6 +57,12 @@ class Page():
 			file.write("PRODID:1\n")
 			for event in self.events:
 				file.write("BEGIN:VEVENT\n")
+				file.write("UID:"+event['date'].strftime('%d%m%Y')+event['name']+"@birthday\n")
+				file.write("DTSTART:"+event['date'].strftime('%Y%m%d')+"\n")
+				file.write("DTEND:"+event['date'].strftime('%Y%m%d')+"\n")
+				file.write("CATEGORIES:MEETING\n")
+				file.write("CLASS:PUBLIC\n")
+				file.write("SUMMARY:"+event['name']+"'s birthday\n")
 				file.write("END:VEVENT\n")
 			file.write("END:VCALENDAR\n")
 	def _write_csv(self):
@@ -84,4 +90,5 @@ class Page():
 
 page = Page('family.txt')
 page.read();
+page.save(type='csv');
 page.save(type='ics');

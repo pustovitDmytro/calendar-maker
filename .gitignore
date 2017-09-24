@@ -1,2 +1,3 @@
 source/*.txt
-results/
+results/*.ics
+results/*.csv

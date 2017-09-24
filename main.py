@@ -67,7 +67,7 @@ class Page():
 				file.write("END:VEVENT\n")
 			file.write("END:VCALENDAR\n")
 	def _write_csv(self):
-		with open(self.name+'.cvs', 'w', encoding='utf-8') as csvfile:
+		with open(self.name+'.csv', 'w', encoding='utf-8') as csvfile:
 			fieldnames = ['Subject','Start Date','All Day Event','Private']
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames,delimiter =",")
 			writer.writeheader()

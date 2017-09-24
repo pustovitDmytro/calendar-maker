@@ -38,6 +38,26 @@ After you've jenerated .ics or .csv file use [theese](https://support.google.com
 
 There are some examples of implementation:
 
+1. prepate `input.txt` file with data in this format:
+```
+name;date
+Петя;01.05
+Вася;02.05
+```
+2. save it as [Unicode](https://en.wikipedia.org/wiki/Unicode) plain text in the source directory.
+
+3. Add this code to main.py
+```python
+page = Page('family.txt')
+page.read();
+page.save(type='csv');
+page.save(type='ics');
+```
+4. run in the command line 
+```sh
+$ python main.py
+```
+5. browse results directory
 ## License
 
 MIT

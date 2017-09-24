@@ -45,13 +45,14 @@ class Page():
 			reader = csv.DictReader(csvfile,delimiter =";")
 			self.events = []
 			for row in reader:
+				print(row['name'])
 				record = {
 				'name': row['name'],
 				'date': self.get_date(row['date'])
 				}
 				self.events.append(record)
 	def _write_ics(self):
-		with open(self.name+'.ics','w') as file:
+		with open(self.name+'.ics','w', encoding='utf-8') as file:
 			file.write("BEGIN:VCALENDAR\n")
 			file.write("VERSION:2.0\n")
 			file.write("PRODID:1\n")
@@ -60,19 +61,19 @@ class Page():
 				file.write("UID:"+event['date'].strftime('%d%m%Y')+event['name']+"@birthday\n")
 				file.write("DTSTART:"+event['date'].strftime('%Y%m%d')+"\n")
 				file.write("DTEND:"+event['date'].strftime('%Y%m%d')+"\n")
-				file.write("CATEGORIES:MEETING\n")
+				file.write("CATEGORIES:BIRTHDAY\n")
 				file.write("CLASS:PUBLIC\n")
-				file.write("SUMMARY:"+event['name']+"'s birthday\n")
+				file.write("SUMMARY:"+event['name']+" день народження\n")
 				file.write("END:VEVENT\n")
 			file.write("END:VCALENDAR\n")
 	def _write_csv(self):
-		with open(self.name+'.cvs', 'w') as csvfile:
+		with open(self.name+'.cvs', 'w', encoding='utf-8') as csvfile:
 			fieldnames = ['Subject','Start Date','All Day Event','Private']
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames,delimiter =",")
 			writer.writeheader()
 			for event in self.events:
 				record = {
-				'Subject': event['name']+"'s birthday",
+				'Subject': event['name']+" день народження",
 				'Start Date': event['date'].strftime('%d/%m/%Y'),
 				'All Day Event': True,
 				'Private': True
